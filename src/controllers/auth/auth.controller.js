@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../../models/user';
+import uuid from 'uuid/v4';
 
 const sendAuthFailure = (res) => {
   res.header('WWW-Authenticate', 'Bearer realm="Access to Delta API"');
@@ -32,11 +33,39 @@ export const authenticateRequest = (req, res, next) => {
 };
 
 export const loginUser = (req, res) => {
-  res.send('TODO');
+  const {email, password } = req.body;
+
+  User.findOne({where: {email} })
+    .then((data) => {
+      if(data && data.correctPassword(password)){
+        console.log('password validated');
+        res.send({data: 'todo:send_token'});
+      } else {
+        res.send({data: 'invalid credentials'});
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+    });
 };
 
 export const registerUser = (req, res) => {
-  res.send('TODO');
+  const {email, password } = req.body;
+
+  User.create({
+    id: uuid(),
+    email,
+    password,
+  })
+    .then((data) => {
+      console.log(data);
+      res.send({data});
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+    });
 };
 
 export default authenticateRequest;
