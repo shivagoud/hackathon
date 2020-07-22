@@ -1,5 +1,5 @@
 import Express from 'express';
-import { getHackathons } from '../controllers/hackathon.controller';
+import { getHackathons, createHackathon } from '../controllers/hackathon.controller';
 import { apiNotReady } from '../controllers/api.controller';
 
 const router = Express.Router();
@@ -12,6 +12,20 @@ const router = Express.Router();
  * @apiGroup Hackathons
  */
 router.get('/', getHackathons);
+
+/**
+ * @api {post} /hackathons Create a hackathon
+ * @apiDescription Create a hackathon
+ * @apiHeader {String} authorization JWT Token.
+ * @apiName CreateHackathon
+ * @apiGroup Hackathons
+ *
+ * @apiParam {String} name Name of the hackathon
+ * @apiParam {String} problem_statement Problem statement
+ * @apiParam {Date} start_time Start time of the hackathon
+ * @apiParam {Date} end_time End time of the hackathon
+ */
+router.post('/', createHackathon);
 
 /**
  * @api {get} /hackathons/:id/details Get hackathon details
