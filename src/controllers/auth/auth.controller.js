@@ -31,12 +31,12 @@ export const authenticateRequest = (req, res, next) => {
   return 0;
 };
 
-export const loginUser = (req, res) {
+export const loginUser = (req, res) => {
   res.send('TODO');
-}
+};
 
-export const registerUser = (req, res) {
+export const registerUser = (req, res) => {
   res.send('TODO');
-}
+};
 
 export default authenticateRequest;
