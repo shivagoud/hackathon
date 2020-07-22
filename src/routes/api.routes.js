@@ -1,7 +1,8 @@
 import Express from 'express';
 
 // Hackathon modules
-import hackathonRouter from './hackathon.routes.js';
+import hackathonRouter from './hackathon.routes';
+import hackathonGroupRouter from './hackathon_group.routes';
 
 import authRouter from './auth';
 
@@ -23,8 +24,9 @@ router.use('/doc', devOnly, Express.static('./doc'));
 // router.use('/example_resources', exampleRouter);
 
 // Fully private routes
-// router.use(authenticate);  // TODO switch on authentication
+router.use(authenticate);
 router.use('/hackathons', hackathonRouter);
+router.use('/hackathon_groups', hackathonGroupRouter);
 
 /**
  * @api {get} / Get sample response

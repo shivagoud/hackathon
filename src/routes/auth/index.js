@@ -9,7 +9,7 @@ const router = Express.Router();
  * @apiName UserLogin
  * @apiGroup Authentication
 
- * @apiParam {String} email Email Id 
+ * @apiParam {String} email Email Id
  * @apiParam {String} password Password
  */
 router.post('/login', loginUser);

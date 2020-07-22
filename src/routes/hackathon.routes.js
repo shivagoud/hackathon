@@ -29,11 +29,11 @@ router.get('/:id', apiNotReady);
  * @apiName SubmitCode
  * @apiGroup Submissions
  *
- * @apiParam {String} code_text Code in text format 
+ * @apiParam {String} code_text Code in text format
  * @apiParam {String} language Programming Language selected
  */
 router.post('/:id/submissions', apiNotReady);
-//Response:::: score, Test_results
+// Response:::: score, Test_results
 
 // Response:::: Submissions of the group along with results
 /**

@@ -11,5 +11,5 @@ export const Group = db.define('groups', {
     references: { model: 'users', key: 'id' },
   },
   invitees: Sequelize.ARRAY(Sequelize.UUID),
-  best_score: INTEGER,
+  best_score: Sequelize.INTEGER,
 });
