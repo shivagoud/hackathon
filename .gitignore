@@ -1,3 +1,7 @@
+.env
+doc/
+api-build/
+
 # Logs
 logs
 *.log

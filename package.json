@@ -1,0 +1,68 @@
+{
+  "name": "hackathon",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "db:init": "sequelize db:create",
+    "db:clean": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all",
+    "db:migrate": "sequelize db:migrate",
+    "db:seed": "sequelize db:seed:all",
+    "db:reset": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
+    "build": "npm run db:migrate && babel src -d api-build",
+    "lint": "nodemon --watch src --exec eslint src --fix",
+    "doc": "apidoc -i src",
+    "start-dev": "nodemon --watch src --exec \"apidoc -i src && babel-node --inspect\" src",
+    "start-prod": "node api-build",
+    "start": "if [ $NODE_ENV = 'production' ]; then npm run start-prod; else npm run start-dev; fi;",
+    "test": "jest src/**/*.spec.js"
+  },
+  "engines": {
+    "node": "8.12.0",
+    "npm": "6.4.1"
+  },
+  "apidoc": {
+    "title": "API Documentation",
+    "sampleUrl": "http://localhost:3000/api"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-json-strings": "^7.7.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
+    "@babel/plugin-syntax-import-meta": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/register": "^7.7.7",
+    "@babel/runtime": "^7.7.7",
+    "apidoc-swagger": "github:fsbahman/apidoc-swagger",
+    "bullmq": "^1.5.0",
+    "compression": "^1.7.4",
+    "core-js": "^3.6.2",
+    "dotenv": "^8.2.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "ip": "^1.1.5",
+    "jest": "^24.9.0",
+    "jsonwebtoken": "^8.2.1",
+    "lodash": "^4.17.15",
+    "pg": "^7.17.0",
+    "regenerator-runtime": "^0.13.3",
+    "sequelize": "^5.21.3",
+    "superagent": "^3.8.2",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.7.7",
+    "apidoc": "^0.17.6",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.19.1",
+    "nodemon": "^1.19.4",
+    "sequelize-cli": "^5.5.1",
+    "supertest": "^3.1.0"
+  },
+  "eslintIgnore": [
+    "**/*.spec.js"
+  ]
+}
