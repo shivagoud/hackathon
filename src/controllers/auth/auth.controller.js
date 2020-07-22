@@ -36,10 +36,13 @@ export const loginUser = (req, res) => {
   const {email, password } = req.body;
 
   User.findOne({where: {email} })
-    .then((data) => {
-      if(data && data.correctPassword(password)){
+    .then(user => {
+      if(user && user.correctPassword(password)){
         console.log('password validated');
-        res.send({data: 'todo:send_token'});
+        const token = jwt.sign({
+          userId: user.id,
+        }, process.env.JWT_SECRET);
+        res.send({data: { token }});
       } else {
         res.send({data: 'invalid credentials'});
       }
