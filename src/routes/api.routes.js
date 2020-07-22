@@ -23,7 +23,7 @@ router.use('/doc', devOnly, Express.static('./doc'));
 // router.use('/example_resources', exampleRouter);
 
 // Fully private routes
-router.use(authenticate);
+// router.use(authenticate);  // TODO switch on authentication
 router.use('/hackathons', hackathonRouter);
 
 /**
