@@ -1,5 +1,5 @@
 import Express from 'express';
-import { getHackathons, createHackathon } from '../controllers/hackathon.controller';
+import { getHackathons, createHackathon, getHackathonDetails } from '../controllers/hackathon.controller';
 import { apiNotReady } from '../controllers/api.controller';
 
 const router = Express.Router();
@@ -34,7 +34,7 @@ router.post('/', createHackathon);
  * @apiName GetHackathonDetails
  * @apiGroup Hackathons
  */
-router.get('/:id', apiNotReady);
+router.get('/:id/details', getHackathonDetails);
 
 /**
  * @api {post} /hackathons/:id/submissions Submit code
