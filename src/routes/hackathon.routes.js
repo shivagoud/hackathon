@@ -1,5 +1,8 @@
 import Express from 'express';
-import { getHackathons, createHackathon, getHackathonDetails } from '../controllers/hackathon.controller';
+import {
+  getHackathons, createHackathon, getHackathonDetails,
+  getSubmissionRanking, getSubmissions, submitCode,
+} from '../controllers/hackathon.controller';
 import { apiNotReady } from '../controllers/api.controller';
 
 const router = Express.Router();
@@ -46,7 +49,7 @@ router.get('/:id/details', getHackathonDetails);
  * @apiParam {String} code_text Code in text format
  * @apiParam {String} language Programming Language selected
  */
-router.post('/:id/submissions', apiNotReady);
+router.post('/:id/submissions', submitCode);
 // Response:::: score, Test_results
 
 // Response:::: Submissions of the group along with results
@@ -66,7 +69,7 @@ router.get('/:id/submissions', apiNotReady);
  * @apiName GetRanking
  * @apiGroup Ranking
  */
-router.get('/:id/ranking', apiNotReady);
+router.get('/:id/ranking', getSubmissionRanking);
 
 
 export default router;
