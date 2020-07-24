@@ -1,6 +1,5 @@
-import { Hackathon } from '../models/hackathon';
-import { Registration } from '../models/hackathon';
-import { Group } from '../models/hackathon';
+import uuid from 'uuid/v4';
+import { Hackathon, Registration, Group } from '../models/hackathon';
 
 export const getHackathons = (req, res) => {
   Hackathon.findAll({})
@@ -40,48 +39,48 @@ export const createHackathon = (req, res) => {
   const {
     name, problem_statement, start_time, end_time,
   } = req.body;
-  Hackathon.create({ name, problem_statement, start_time })
+  Hackathon.create({
+    id: uuid(), name, problem_statement, start_time, end_time,
+  })
     .then(data => {
       res.send({ data });
     })
     .catch(err => {
+      console.log(err);
       res.sendStatus(500);
     });
 };
 
-export const validateHackathon = (req, res, next) => {
+export const validateHackathon = async (req, res, next) => {
   const { id } = req.params;
   const { hackathon, userId } = req.jwtData;
   const now = new Date();
 
-  if(!hackathon) {
+  if (!hackathon) {
     hackathon = await Registration.findOne({
-      where: {user_id: userId},
+      where: { user_id: userId },
       include: [Group, Hackathon],
     })
-    .then(data => {
+      .then(data =>
       // TODO: FIX THIS
-      return {
-        startTime: Date.now();
-        endTime: Date.now();
-        groupId: userId
-      };
-
-    }).catch(err => {
-      console.log(err);
-      res.sendStatus(500);
-    });
+        ({
+          startTime: Date.now(),
+          endTime: Date.now(),
+          groupId: userId,
+        })).catch(err => {
+        console.log(err);
+        res.sendStatus(500);
+      });
 
     req.jwtData.hackathon = hackathon;
   }
 
   // Checking if active hackathon
-  if(now < hackathon.end_time && now >= hackathon.start_time) {
+  if (now < hackathon.end_time && now >= hackathon.start_time) {
     return next();
-  } else {
-    res.sendStatus(404);
   }
-}
+  res.sendStatus(404);
+};
 
 const loadTestCases = hackathon_id => [];
 
@@ -98,15 +97,14 @@ export const submitCode = (req, res) => {
   Submission.create({
     code_url: 'sample_url',
     language,
-    group_id: groupId
+    group_id: groupId,
   })
-  .then(submission => loadTestCases(hackathon_id)
-    .then(testCases => runCode(submission, testCases))
-  )
-  .then(results => {
-    const score = 0; // calculate
-    res.send({data: {results, score});
-  });
+    .then(submission => loadTestCases(hackathon_id)
+      .then(testCases => runCode(submission, testCases)))
+    .then(results => {
+      const score = 0; // calculate
+      res.send({ data: { results, score } });
+    });
 };
 
 export const getSubmissionRanking = (req, res) => {
