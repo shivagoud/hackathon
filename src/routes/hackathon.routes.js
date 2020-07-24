@@ -2,6 +2,7 @@ import Express from 'express';
 import {
   getHackathons, createHackathon, getHackathonDetails,
   getSubmissionRanking, getSubmissions, submitCode,
+  validateHackathon,
 } from '../controllers/hackathon.controller';
 import { apiNotReady } from '../controllers/api.controller';
 
@@ -49,10 +50,8 @@ router.get('/:id/details', getHackathonDetails);
  * @apiParam {String} code_text Code in text format
  * @apiParam {String} language Programming Language selected
  */
-router.post('/:id/submissions', submitCode);
-// Response:::: score, Test_results
+router.post('/:id/submissions', validateHackathon, submitCode);
 
-// Response:::: Submissions of the group along with results
 /**
  * @api {get} /hackathons/:id/submissions Get submissions
  * @apiDescription Get all submissions made by the current user
